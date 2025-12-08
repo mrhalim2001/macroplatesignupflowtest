@@ -82,7 +82,7 @@ const Index = () => {
               onClick={handleGetStarted}
               className="h-14 px-8 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold tracking-[0.15em] text-sm uppercase rounded-sm"
             >
-              Get Started
+              Get Offer
             </Button>
           </div>
         </div>
