@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Sun, Coffee, Moon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import ProgressBar from "@/components/ProgressBar";
 
 interface DailyMealsSelectionProps {
   onBack: () => void;
@@ -55,39 +56,35 @@ const DailyMealsSelection = ({ onBack, onContinue }: DailyMealsSelectionProps) =
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen flex flex-col bg-secondary">
       {/* Header */}
-      <div className="p-4">
+      <header className="bg-background py-4 px-4 flex items-center border-b border-border">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-muted transition-colors"
         >
-          <ArrowLeft className="w-5 h-5" />
-          <span>Back</span>
+          <ArrowLeft className="w-5 h-5 text-foreground" />
         </button>
-      </div>
+        <h1 className="flex-1 text-center text-lg font-semibold tracking-[0.1em] text-foreground font-sans pr-10">
+          MACROPLATE
+        </h1>
+      </header>
 
-      {/* Progress bar */}
-      <div className="px-4 mb-8">
-        <div className="h-2 bg-muted rounded-full overflow-hidden">
-          <div
-            className="h-full bg-primary transition-all duration-300"
-            style={{ width: "71%" }}
-          />
-        </div>
-        <p className="text-sm text-muted-foreground mt-2">Step 5 of 7</p>
-      </div>
+      {/* Progress indicator */}
+      <ProgressBar currentStep={6} />
 
       {/* Content */}
-      <div className="flex-1 px-4 pb-4">
-        <h1 className="text-3xl font-bold text-foreground mb-2">
-          How many meals per day?
-        </h1>
-        <p className="text-muted-foreground mb-8">
-          Choose how many daily meals you'd like delivered
-        </p>
+      <div className="flex-1 px-6 py-8 overflow-y-auto">
+        <div className="animate-fade-in">
+          <h2 className="headline-serif text-3xl text-secondary-foreground text-center mb-2">
+            How many meals per day?
+          </h2>
+          <p className="text-center text-secondary-foreground/70 text-sm mb-8">
+            Choose how many daily meals you'd like delivered
+          </p>
+        </div>
 
-        <div className="space-y-4">
+        <div className="space-y-4 max-w-md mx-auto">
           {mealOptions.map((option) => {
             const isSelected = selected === option.id;
             return (
@@ -176,12 +173,11 @@ const DailyMealsSelection = ({ onBack, onContinue }: DailyMealsSelectionProps) =
         </div>
       </div>
 
-      {/* Bottom button */}
-      <div className="p-4 border-t border-border">
+      {/* Footer */}
+      <div className="p-6 bg-secondary">
         <Button
           onClick={handleContinue}
-          className="w-full py-6 text-lg font-semibold"
-          size="lg"
+          className="w-full h-14 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold tracking-[0.15em] text-sm uppercase rounded-sm"
         >
           Continue
         </Button>

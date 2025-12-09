@@ -12,6 +12,7 @@ import {
   Fish,
   Cherry
 } from "lucide-react";
+import ProgressBar from "@/components/ProgressBar";
 
 const allergies = [
   { id: "shellfish", label: "Shellfish", icon: Shell },
@@ -59,14 +60,7 @@ const AllergiesSelection = ({ onBack, onContinue }: AllergiesSelectionProps) => 
       </header>
 
       {/* Progress indicator */}
-      <div className="bg-background px-6 py-3">
-        <div className="flex gap-2">
-          <div className="h-1 flex-1 bg-accent rounded-full" />
-          <div className="h-1 flex-1 bg-accent rounded-full" />
-          <div className="h-1 flex-1 bg-accent rounded-full" />
-          <div className="h-1 flex-1 bg-accent rounded-full" />
-        </div>
-      </div>
+      <ProgressBar currentStep={4} />
 
       {/* Content */}
       <div className="flex-1 px-6 py-8 overflow-y-auto">
