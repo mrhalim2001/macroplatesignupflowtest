@@ -86,38 +86,43 @@ const WeeklyFrequency = ({ onBack, onContinue }: WeeklyFrequencyProps) => {
                 key={option.id}
                 onClick={() => setSelected(option.id)}
                 className={cn(
-                  "w-full p-6 rounded-2xl border-2 transition-all duration-200 text-left",
+                  "w-full p-6 rounded-lg transition-all duration-200 text-left",
                   isSelected
-                    ? "border-primary bg-primary/5"
-                    : "border-border bg-card hover:border-primary/50"
+                    ? "bg-accent text-accent-foreground ring-2 ring-accent ring-offset-2 ring-offset-secondary"
+                    : "bg-background text-foreground hover:bg-background/90"
                 )}
               >
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <h3 className={cn(
                       "text-xl font-semibold",
-                      isSelected ? "text-primary" : "text-foreground"
+                      isSelected ? "text-accent-foreground" : "text-foreground"
                     )}>
                       {option.title}
                     </h3>
-                    <p className="text-muted-foreground text-sm">
+                    <p className={cn(
+                      "text-sm",
+                      isSelected ? "text-accent-foreground/80" : "text-muted-foreground"
+                    )}>
                       {option.description}
                     </p>
                   </div>
                   <div className={cn(
                     "w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all",
                     isSelected
-                      ? "border-primary bg-primary"
+                      ? "border-accent-foreground bg-accent-foreground"
                       : "border-muted-foreground/30"
                   )}>
                     {isSelected && (
-                      <div className="w-2 h-2 rounded-full bg-primary-foreground" />
+                      <div className="w-2 h-2 rounded-full bg-accent" />
                     )}
                   </div>
                 </div>
 
-                {/* Calendar days visualization */}
-                <div className="flex items-center justify-center gap-2 py-3 bg-muted/50 rounded-xl">
+                <div className={cn(
+                  "flex items-center justify-center gap-2 py-3 rounded-xl",
+                  isSelected ? "bg-accent-foreground/10" : "bg-muted/50"
+                )}>
                   {allDays.map((day, index) => {
                     const isActive = activeDays.includes(index);
                     return (
@@ -126,7 +131,7 @@ const WeeklyFrequency = ({ onBack, onContinue }: WeeklyFrequencyProps) => {
                         className={cn(
                           "w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold transition-all",
                           isActive
-                            ? "bg-primary text-primary-foreground"
+                            ? "bg-accent text-accent-foreground"
                             : "bg-muted text-muted-foreground/40"
                         )}
                       >
