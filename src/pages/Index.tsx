@@ -37,6 +37,10 @@ interface SignupData {
   dailyMeals: string;
   weeklyFrequency: string;
   selectedPlan: string;
+  addons: {
+    snacks: boolean;
+    smoothies: boolean;
+  };
   email: string;
   marketingOptIn: boolean;
   address: DeliveryAddressData | null;
@@ -56,6 +60,10 @@ const Index = () => {
     dailyMeals: "",
     weeklyFrequency: "",
     selectedPlan: "",
+    addons: {
+      snacks: false,
+      smoothies: false,
+    },
     email: "",
     marketingOptIn: true,
     address: null,
@@ -116,8 +124,8 @@ const Index = () => {
     return "traditional";
   };
 
-  const handlePlanSubmit = (selectedPlan: string) => {
-    setSignupData((prev) => ({ ...prev, selectedPlan }));
+  const handlePlanSubmit = (selectedPlan: string, addons: { snacks: boolean; smoothies: boolean }) => {
+    setSignupData((prev) => ({ ...prev, selectedPlan, addons }));
     setStep("email");
   };
 

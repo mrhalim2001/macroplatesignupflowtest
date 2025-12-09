@@ -1,12 +1,18 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Flame, Drumstick, Leaf, Sprout, Carrot, Star } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { ArrowLeft, Flame, Drumstick, Leaf, Sprout, Carrot, Star, Cookie, GlassWater } from "lucide-react";
 import { cn } from "@/lib/utils";
 import ProgressBar from "@/components/ProgressBar";
 
+interface Addons {
+  snacks: boolean;
+  smoothies: boolean;
+}
+
 interface PlanSelectionProps {
   onBack: () => void;
-  onContinue: (plan: string) => void;
+  onContinue: (plan: string, addons: Addons) => void;
   recommendedPlan?: string;
 }
 
@@ -53,11 +59,36 @@ const plans = [
   },
 ];
 
+const addons = [
+  {
+    id: "snacks",
+    title: "Snacks",
+    description: "Healthy snacks daily",
+    price: "+$4.99/day",
+    icon: Cookie,
+  },
+  {
+    id: "smoothies",
+    title: "Smoothies",
+    description: "Fresh smoothies daily",
+    price: "+$5.99/day",
+    icon: GlassWater,
+  },
+];
+
 const PlanSelection = ({ onBack, onContinue, recommendedPlan = "traditional" }: PlanSelectionProps) => {
   const [selected, setSelected] = useState<string>(recommendedPlan);
+  const [selectedAddons, setSelectedAddons] = useState<Addons>({
+    snacks: false,
+    smoothies: false,
+  });
+
+  const handleAddonToggle = (addonId: keyof Addons) => {
+    setSelectedAddons((prev) => ({ ...prev, [addonId]: !prev[addonId] }));
+  };
 
   const handleContinue = () => {
-    onContinue(selected);
+    onContinue(selected, selectedAddons);
   };
 
   return (
@@ -164,6 +195,43 @@ const PlanSelection = ({ onBack, onContinue, recommendedPlan = "traditional" }: 
               </button>
             );
           })}
+        </div>
+
+        {/* Addons Section */}
+        <div className="mt-4 max-w-md mx-auto">
+          <div className="border-t border-border/50 pt-3 mb-2">
+            <h3 className="text-sm font-semibold text-secondary-foreground mb-2">Add-ons</h3>
+          </div>
+          <div className="space-y-2">
+            {addons.map((addon) => {
+              const Icon = addon.icon;
+              const isEnabled = selectedAddons[addon.id as keyof Addons];
+              
+              return (
+                <div
+                  key={addon.id}
+                  className="flex items-center justify-between p-3 bg-background rounded-lg"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
+                      <Icon className="w-4 h-4 text-foreground" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-medium text-foreground">{addon.title}</h4>
+                      <p className="text-xs text-muted-foreground">{addon.description}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-medium text-muted-foreground">{addon.price}</span>
+                    <Switch
+                      checked={isEnabled}
+                      onCheckedChange={() => handleAddonToggle(addon.id as keyof Addons)}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
 
