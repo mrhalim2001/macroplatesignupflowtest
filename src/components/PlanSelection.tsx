@@ -120,7 +120,7 @@ const PlanSelection = ({ onBack, onContinue, recommendedPlan = "traditional" }: 
           </p>
         </div>
 
-        <div className="space-y-2 max-w-md mx-auto">
+        <div className="grid grid-cols-2 gap-2 max-w-md mx-auto">
           {plans.map((plan) => {
             const isSelected = selected === plan.id;
             const isRecommended = plan.id === recommendedPlan;
@@ -131,78 +131,48 @@ const PlanSelection = ({ onBack, onContinue, recommendedPlan = "traditional" }: 
                 key={plan.id}
                 onClick={() => setSelected(plan.id)}
                 className={cn(
-                  "w-full p-3 rounded-lg transition-all duration-200 text-left relative",
+                  "p-3 rounded-lg transition-all duration-200 text-center relative flex flex-col items-center",
                   isSelected
                     ? "bg-accent text-accent-foreground ring-2 ring-accent ring-offset-2 ring-offset-secondary"
                     : "bg-background text-foreground hover:bg-background/90"
                 )}
               >
                 {isRecommended && (
-                  <div className="absolute -top-2 right-3 bg-accent text-accent-foreground text-[10px] font-semibold px-2 py-0.5 rounded-full flex items-center gap-1">
-                    <Star className="w-3 h-3" />
+                  <div className="absolute -top-2 left-1/2 -translate-x-1/2 bg-accent text-accent-foreground text-[9px] font-semibold px-2 py-0.5 rounded-full flex items-center gap-0.5 whitespace-nowrap">
+                    <Star className="w-2.5 h-2.5" />
                     Recommended
                   </div>
                 )}
-                <div className="flex items-center gap-3">
-                  <div className={cn(
-                    "w-10 h-10 rounded-lg flex items-center justify-center shrink-0",
-                    isSelected ? "bg-accent-foreground/10" : "bg-muted"
-                  )}>
-                    <Icon className={cn(
-                      "w-5 h-5",
-                      isSelected ? "text-accent-foreground" : "text-foreground"
-                    )} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className={cn(
-                      "text-sm font-semibold",
-                      isSelected ? "text-accent-foreground" : "text-foreground"
-                    )}>
-                      {plan.title}
-                    </h3>
-                    <p className={cn(
-                      "text-xs",
-                      isSelected ? "text-accent-foreground/80" : "text-muted-foreground"
-                    )}>
-                      {plan.description}
-                    </p>
-                  </div>
-                  <div className="text-right shrink-0">
-                    <p className={cn(
-                      "text-sm font-bold",
-                      isSelected ? "text-accent-foreground" : "text-foreground"
-                    )}>
-                      {plan.price}
-                    </p>
-                    <p className={cn(
-                      "text-[10px]",
-                      isSelected ? "text-accent-foreground/70" : "text-muted-foreground"
-                    )}>
-                      {plan.priceNote}
-                    </p>
-                  </div>
-                  <div className={cn(
-                    "w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all shrink-0",
-                    isSelected
-                      ? "border-accent-foreground bg-accent-foreground"
-                      : "border-muted-foreground/30"
-                  )}>
-                    {isSelected && (
-                      <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                    )}
-                  </div>
+                <div className={cn(
+                  "w-8 h-8 rounded-lg flex items-center justify-center mb-1.5",
+                  isSelected ? "bg-accent-foreground/10" : "bg-muted"
+                )}>
+                  <Icon className={cn(
+                    "w-4 h-4",
+                    isSelected ? "text-accent-foreground" : "text-foreground"
+                  )} />
                 </div>
+                <h3 className={cn(
+                  "text-xs font-semibold",
+                  isSelected ? "text-accent-foreground" : "text-foreground"
+                )}>
+                  {plan.title}
+                </h3>
+                <p className={cn(
+                  "text-sm font-bold mt-0.5",
+                  isSelected ? "text-accent-foreground" : "text-foreground"
+                )}>
+                  {plan.price}
+                </p>
               </button>
             );
           })}
         </div>
 
         {/* Addons Section */}
-        <div className="mt-4 max-w-md mx-auto">
-          <div className="border-t border-border/50 pt-3 mb-2">
-            <h3 className="text-sm font-semibold text-secondary-foreground mb-2">Add-ons</h3>
-          </div>
-          <div className="space-y-2">
+        <div className="mt-3 max-w-md mx-auto">
+          <h3 className="text-xs font-semibold text-secondary-foreground mb-2">Add-ons</h3>
+          <div className="grid grid-cols-2 gap-2">
             {addons.map((addon) => {
               const Icon = addon.icon;
               const isEnabled = selectedAddons[addon.id as keyof Addons];
@@ -210,24 +180,22 @@ const PlanSelection = ({ onBack, onContinue, recommendedPlan = "traditional" }: 
               return (
                 <div
                   key={addon.id}
-                  className="flex items-center justify-between p-3 bg-background rounded-lg"
+                  className="flex items-center justify-between p-2.5 bg-background rounded-lg"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
-                      <Icon className="w-4 h-4 text-foreground" />
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-muted flex items-center justify-center">
+                      <Icon className="w-3.5 h-3.5 text-foreground" />
                     </div>
                     <div>
-                      <h4 className="text-sm font-medium text-foreground">{addon.title}</h4>
-                      <p className="text-xs text-muted-foreground">{addon.description}</p>
+                      <h4 className="text-xs font-medium text-foreground">{addon.title}</h4>
+                      <p className="text-[10px] text-muted-foreground">{addon.price}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-xs font-medium text-muted-foreground">{addon.price}</span>
-                    <Switch
-                      checked={isEnabled}
-                      onCheckedChange={() => handleAddonToggle(addon.id as keyof Addons)}
-                    />
-                  </div>
+                  <Switch
+                    checked={isEnabled}
+                    onCheckedChange={() => handleAddonToggle(addon.id as keyof Addons)}
+                    className="scale-90"
+                  />
                 </div>
               );
             })}
