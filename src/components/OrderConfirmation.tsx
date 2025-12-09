@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Check, Truck, Calendar, Utensils } from "lucide-react";
+import heroMeal from "@/assets/hero-meal.jpg";
 
 interface OrderConfirmationProps {
   deliveryDay: string;
@@ -13,10 +14,16 @@ const OrderConfirmation = ({ deliveryDay }: OrderConfirmationProps) => {
   return (
     <div className="h-dvh flex flex-col bg-secondary overflow-hidden">
       {/* Header */}
-      <header className="bg-background py-3 px-4 flex items-center justify-center border-b border-border shrink-0">
-        <h1 className="text-lg font-semibold tracking-[0.1em] text-foreground font-sans">
+      <header className="bg-background py-3 px-6 flex items-center justify-between border-b border-border shrink-0">
+        <div className="w-8" />
+        <h1 className="text-xl font-semibold tracking-[0.15em] text-foreground font-sans">
           MACROPLATE
         </h1>
+        <button className="w-8 h-8 flex flex-col justify-center items-center gap-1.5">
+          <span className="w-5 h-0.5 bg-foreground" />
+          <span className="w-5 h-0.5 bg-foreground" />
+          <span className="w-5 h-0.5 bg-foreground" />
+        </button>
       </header>
 
       {/* Content */}
@@ -71,9 +78,16 @@ const OrderConfirmation = ({ deliveryDay }: OrderConfirmationProps) => {
           </div>
         </div>
 
-        {/* Decorative meal illustration */}
-        <div className="mt-6 animate-fade-in" style={{ animationDelay: "0.6s" }}>
-          <div className="text-5xl">🥗</div>
+        {/* Professional meal photo */}
+        <div className="mt-6 animate-fade-in w-full max-w-sm" style={{ animationDelay: "0.6s" }}>
+          <div className="relative rounded-xl overflow-hidden shadow-lg">
+            <img
+              src={heroMeal}
+              alt="Delicious chef-prepared meal"
+              className="w-full h-32 object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+          </div>
         </div>
       </div>
 
