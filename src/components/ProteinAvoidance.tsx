@@ -55,7 +55,7 @@ const ProteinAvoidance = ({ onBack, onContinue }: ProteinAvoidanceProps) => {
       <ProgressBar currentStep={5} totalSteps={11} />
 
       {/* Content */}
-      <div className="flex-1 px-4 py-4 min-h-0 flex flex-col justify-center">
+      <div className="flex-1 px-4 py-4 min-h-0 overflow-y-auto">
         <div className="animate-fade-in">
           <h2 className="headline-serif text-2xl text-secondary-foreground text-center mb-1">
             Any proteins to avoid?
@@ -65,7 +65,7 @@ const ProteinAvoidance = ({ onBack, onContinue }: ProteinAvoidanceProps) => {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
+        <div className="grid grid-cols-2 gap-2 max-w-md mx-auto">
           {proteins.map((protein, index) => {
             const Icon = protein.icon;
             const avoided = isAvoided(protein.id);
@@ -75,7 +75,7 @@ const ProteinAvoidance = ({ onBack, onContinue }: ProteinAvoidanceProps) => {
                 key={protein.id}
                 onClick={() => toggleProtein(protein.id)}
                 className={`
-                  relative p-5 rounded-lg flex flex-col items-center gap-2 transition-all duration-200
+                  relative p-4 rounded-lg flex flex-col items-center gap-2 transition-all duration-200
                   animate-fade-in
                   ${avoided 
                     ? "bg-destructive/10 text-destructive ring-2 ring-destructive ring-offset-2 ring-offset-secondary" 
@@ -90,14 +90,14 @@ const ProteinAvoidance = ({ onBack, onContinue }: ProteinAvoidanceProps) => {
                   </div>
                 )}
                 <div className="relative">
-                  <Icon className={`w-7 h-7 ${avoided ? "text-destructive/70" : "text-accent"}`} />
+                  <Icon className={`w-6 h-6 ${avoided ? "text-destructive/70" : "text-accent"}`} />
                   {avoided && (
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-9 h-0.5 bg-destructive rotate-45 rounded-full" />
+                      <div className="w-8 h-0.5 bg-destructive rotate-45 rounded-full" />
                     </div>
                   )}
                 </div>
-                <span className={`text-sm font-medium text-center leading-tight ${avoided ? "line-through opacity-70" : ""}`}>
+                <span className={`text-xs font-medium text-center leading-tight ${avoided ? "line-through opacity-70" : ""}`}>
                   {avoided ? `No ${protein.label}` : protein.label}
                 </span>
               </button>
