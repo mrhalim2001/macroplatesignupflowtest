@@ -60,7 +60,7 @@ const AllergiesSelection = ({ onBack, onContinue }: AllergiesSelectionProps) => 
       </header>
 
       {/* Progress indicator */}
-      <ProgressBar currentStep={4} />
+      <ProgressBar currentStep={4} totalSteps={11} />
 
       {/* Content */}
       <div className="flex-1 px-6 py-8 overflow-y-auto">

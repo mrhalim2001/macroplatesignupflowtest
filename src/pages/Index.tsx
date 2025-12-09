@@ -6,8 +6,23 @@ import AllergiesSelection from "@/components/AllergiesSelection";
 import ProteinAvoidance from "@/components/ProteinAvoidance";
 import DailyMealsSelection from "@/components/DailyMealsSelection";
 import WeeklyFrequency from "@/components/WeeklyFrequency";
+import EmailEntry from "@/components/EmailEntry";
+import DeliveryAddress, { DeliveryAddressData } from "@/components/DeliveryAddress";
+import DeliveryDay from "@/components/DeliveryDay";
+import PaymentDetails from "@/components/PaymentDetails";
 
-type Step = "zipcode" | "goals" | "meals" | "allergies" | "proteins" | "daily-meals" | "weekly-frequency";
+type Step = 
+  | "zipcode" 
+  | "goals" 
+  | "meals" 
+  | "allergies" 
+  | "proteins" 
+  | "daily-meals" 
+  | "weekly-frequency"
+  | "email"
+  | "address"
+  | "delivery-day"
+  | "payment";
 
 interface SignupData {
   zipCode: string;
@@ -17,6 +32,12 @@ interface SignupData {
   avoidedProteins: string[];
   dailyMeals: string;
   weeklyFrequency: string;
+  email: string;
+  marketingOptIn: boolean;
+  address: DeliveryAddressData | null;
+  deliveryDay: string;
+  deliveryInstructions: string;
+  paymentMethod: string;
 }
 
 const Index = () => {
@@ -29,6 +50,12 @@ const Index = () => {
     avoidedProteins: [],
     dailyMeals: "",
     weeklyFrequency: "",
+    email: "",
+    marketingOptIn: true,
+    address: null,
+    deliveryDay: "",
+    deliveryInstructions: "",
+    paymentMethod: "",
   });
 
   const handleZipCodeSubmit = (zipCode: string) => {
@@ -63,23 +90,38 @@ const Index = () => {
 
   const handleWeeklyFrequencySubmit = (weeklyFrequency: string) => {
     setSignupData((prev) => ({ ...prev, weeklyFrequency }));
-    // TODO: Navigate to next step
-    console.log("Signup data:", { ...signupData, weeklyFrequency });
+    setStep("email");
+  };
+
+  const handleEmailSubmit = (email: string, marketingOptIn: boolean) => {
+    setSignupData((prev) => ({ ...prev, email, marketingOptIn }));
+    setStep("address");
+  };
+
+  const handleAddressSubmit = (address: DeliveryAddressData) => {
+    setSignupData((prev) => ({ ...prev, address }));
+    setStep("delivery-day");
+  };
+
+  const handleDeliveryDaySubmit = (deliveryDay: string, deliveryInstructions: string) => {
+    setSignupData((prev) => ({ ...prev, deliveryDay, deliveryInstructions }));
+    setStep("payment");
+  };
+
+  const handlePaymentSubmit = (paymentMethod: string) => {
+    setSignupData((prev) => ({ ...prev, paymentMethod }));
+    console.log("Order placed:", { ...signupData, paymentMethod });
+    // TODO: Submit order
   };
 
   const handleGoBack = () => {
-    if (step === "goals") {
-      setStep("zipcode");
-    } else if (step === "meals") {
-      setStep("goals");
-    } else if (step === "allergies") {
-      setStep("meals");
-    } else if (step === "proteins") {
-      setStep("allergies");
-    } else if (step === "daily-meals") {
-      setStep("proteins");
-    } else if (step === "weekly-frequency") {
-      setStep("daily-meals");
+    const stepOrder: Step[] = [
+      "zipcode", "goals", "meals", "allergies", "proteins", 
+      "daily-meals", "weekly-frequency", "email", "address", "delivery-day", "payment"
+    ];
+    const currentIndex = stepOrder.indexOf(step);
+    if (currentIndex > 0) {
+      setStep(stepOrder[currentIndex - 1]);
     }
   };
 
@@ -105,6 +147,18 @@ const Index = () => {
       )}
       {step === "weekly-frequency" && (
         <WeeklyFrequency onBack={handleGoBack} onContinue={handleWeeklyFrequencySubmit} />
+      )}
+      {step === "email" && (
+        <EmailEntry onBack={handleGoBack} onContinue={handleEmailSubmit} />
+      )}
+      {step === "address" && (
+        <DeliveryAddress onBack={handleGoBack} onContinue={handleAddressSubmit} />
+      )}
+      {step === "delivery-day" && (
+        <DeliveryDay onBack={handleGoBack} onContinue={handleDeliveryDaySubmit} />
+      )}
+      {step === "payment" && (
+        <PaymentDetails onBack={handleGoBack} onContinue={handlePaymentSubmit} />
       )}
     </>
   );
