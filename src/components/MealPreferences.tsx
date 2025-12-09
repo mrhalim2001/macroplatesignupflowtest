@@ -73,7 +73,7 @@ const MealPreferences = ({ onBack, onContinue }: MealPreferencesProps) => {
       </header>
 
       {/* Progress indicator */}
-      <ProgressBar currentStep={3} />
+      <ProgressBar currentStep={3} totalSteps={11} />
 
       {/* Content */}
       <div className="flex-1 px-6 py-8 overflow-y-auto">

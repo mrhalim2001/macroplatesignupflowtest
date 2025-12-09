@@ -71,7 +71,7 @@ const DailyMealsSelection = ({ onBack, onContinue }: DailyMealsSelectionProps) =
       </header>
 
       {/* Progress indicator */}
-      <ProgressBar currentStep={6} />
+      <ProgressBar currentStep={6} totalSteps={11} />
 
       {/* Content */}
       <div className="flex-1 px-6 py-8 overflow-y-auto">

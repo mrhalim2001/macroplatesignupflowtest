@@ -50,7 +50,7 @@ const GoalsSelection = ({ onBack, onContinue }: GoalsSelectionProps) => {
       </header>
 
       {/* Progress indicator */}
-      <ProgressBar currentStep={2} />
+      <ProgressBar currentStep={2} totalSteps={11} />
 
       {/* Content */}
       <div className="flex-1 px-6 py-8">

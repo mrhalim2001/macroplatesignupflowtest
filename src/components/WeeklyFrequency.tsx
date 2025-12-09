@@ -63,7 +63,7 @@ const WeeklyFrequency = ({ onBack, onContinue }: WeeklyFrequencyProps) => {
       </header>
 
       {/* Progress indicator */}
-      <ProgressBar currentStep={7} />
+      <ProgressBar currentStep={7} totalSteps={11} />
 
       {/* Content */}
       <div className="flex-1 px-6 py-8 overflow-y-auto">

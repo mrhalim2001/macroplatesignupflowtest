@@ -52,7 +52,7 @@ const ProteinAvoidance = ({ onBack, onContinue }: ProteinAvoidanceProps) => {
       </header>
 
       {/* Progress indicator */}
-      <ProgressBar currentStep={5} />
+      <ProgressBar currentStep={5} totalSteps={11} />
 
       {/* Content */}
       <div className="flex-1 px-6 py-8 overflow-y-auto">
