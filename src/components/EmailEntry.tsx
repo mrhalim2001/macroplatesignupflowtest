@@ -38,7 +38,7 @@ const EmailEntry = ({ onBack, onContinue }: EmailEntryProps) => {
       </header>
 
       {/* Progress indicator */}
-      <ProgressBar currentStep={8} totalSteps={11} />
+      <ProgressBar currentStep={9} totalSteps={12} />
 
       {/* Content */}
       <div className="flex-1 px-4 py-6 min-h-0 flex flex-col">

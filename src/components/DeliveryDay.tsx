@@ -44,7 +44,7 @@ const DeliveryDay = ({ onBack, onContinue }: DeliveryDayProps) => {
       </header>
 
       {/* Progress indicator */}
-      <ProgressBar currentStep={10} totalSteps={11} />
+      <ProgressBar currentStep={11} totalSteps={12} />
 
       {/* Content */}
       <div className="flex-1 px-4 py-4 min-h-0 overflow-y-auto">

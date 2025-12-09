@@ -6,6 +6,7 @@ import AllergiesSelection from "@/components/AllergiesSelection";
 import ProteinAvoidance from "@/components/ProteinAvoidance";
 import DailyMealsSelection from "@/components/DailyMealsSelection";
 import WeeklyFrequency from "@/components/WeeklyFrequency";
+import PlanSelection from "@/components/PlanSelection";
 import EmailEntry from "@/components/EmailEntry";
 import DeliveryAddress, { DeliveryAddressData } from "@/components/DeliveryAddress";
 import DeliveryDay from "@/components/DeliveryDay";
@@ -20,6 +21,7 @@ type Step =
   | "proteins" 
   | "daily-meals" 
   | "weekly-frequency"
+  | "plan-selection"
   | "email"
   | "address"
   | "delivery-day"
@@ -34,6 +36,7 @@ interface SignupData {
   avoidedProteins: string[];
   dailyMeals: string;
   weeklyFrequency: string;
+  selectedPlan: string;
   email: string;
   marketingOptIn: boolean;
   address: DeliveryAddressData | null;
@@ -52,6 +55,7 @@ const Index = () => {
     avoidedProteins: [],
     dailyMeals: "",
     weeklyFrequency: "",
+    selectedPlan: "",
     email: "",
     marketingOptIn: true,
     address: null,
@@ -92,6 +96,28 @@ const Index = () => {
 
   const handleWeeklyFrequencySubmit = (weeklyFrequency: string) => {
     setSignupData((prev) => ({ ...prev, weeklyFrequency }));
+    setStep("plan-selection");
+  };
+
+  const getRecommendedPlan = () => {
+    // Logic to recommend plan based on user choices
+    if (signupData.avoidedProteins.includes("beef") && signupData.avoidedProteins.includes("chicken") && signupData.avoidedProteins.includes("pork")) {
+      return "vegetarian";
+    }
+    if (signupData.goals.includes("muscle") || signupData.goals.includes("athletic")) {
+      return "high-protein";
+    }
+    if (signupData.allergies.includes("gluten") || signupData.allergies.includes("dairy")) {
+      return "paleo";
+    }
+    if (signupData.goals.includes("weight-loss")) {
+      return "paleo-lite";
+    }
+    return "traditional";
+  };
+
+  const handlePlanSubmit = (selectedPlan: string) => {
+    setSignupData((prev) => ({ ...prev, selectedPlan }));
     setStep("email");
   };
 
@@ -119,7 +145,7 @@ const Index = () => {
   const handleGoBack = () => {
     const stepOrder: Step[] = [
       "zipcode", "goals", "meals", "allergies", "proteins", 
-      "daily-meals", "weekly-frequency", "email", "address", "delivery-day", "payment"
+      "daily-meals", "weekly-frequency", "plan-selection", "email", "address", "delivery-day", "payment"
     ];
     const currentIndex = stepOrder.indexOf(step);
     if (currentIndex > 0) {
@@ -149,6 +175,9 @@ const Index = () => {
       )}
       {step === "weekly-frequency" && (
         <WeeklyFrequency onBack={handleGoBack} onContinue={handleWeeklyFrequencySubmit} />
+      )}
+      {step === "plan-selection" && (
+        <PlanSelection onBack={handleGoBack} onContinue={handlePlanSubmit} recommendedPlan={getRecommendedPlan()} />
       )}
       {step === "email" && (
         <EmailEntry onBack={handleGoBack} onContinue={handleEmailSubmit} />
