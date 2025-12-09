@@ -29,9 +29,9 @@ const DeliveryDay = ({ onBack, onContinue }: DeliveryDayProps) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-secondary">
+    <div className="h-dvh flex flex-col bg-secondary overflow-hidden">
       {/* Header */}
-      <header className="bg-background py-4 px-4 flex items-center border-b border-border">
+      <header className="bg-background py-3 px-4 flex items-center border-b border-border shrink-0">
         <button
           onClick={onBack}
           className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-muted transition-colors"
@@ -47,19 +47,19 @@ const DeliveryDay = ({ onBack, onContinue }: DeliveryDayProps) => {
       <ProgressBar currentStep={10} totalSteps={11} />
 
       {/* Content */}
-      <div className="flex-1 px-6 py-8 overflow-y-auto">
+      <div className="flex-1 px-4 py-4 min-h-0 overflow-y-auto">
         <div className="animate-fade-in">
-          <h2 className="headline-serif text-3xl text-secondary-foreground text-center mb-2">
+          <h2 className="headline-serif text-2xl text-secondary-foreground text-center mb-1">
             Best day for delivery?
           </h2>
-          <p className="text-center text-secondary-foreground/70 text-sm mb-8">
+          <p className="text-center text-secondary-foreground/70 text-sm mb-4">
             Choose which day works best for you
           </p>
         </div>
 
-        <div className="space-y-6 max-w-md mx-auto">
+        <div className="space-y-4 max-w-md mx-auto">
           {/* Day selector */}
-          <div className="grid grid-cols-7 gap-2">
+          <div className="grid grid-cols-7 gap-1">
             {days.map((day) => {
               const isSelected = selectedDay === day.id;
               return (
@@ -67,9 +67,9 @@ const DeliveryDay = ({ onBack, onContinue }: DeliveryDayProps) => {
                   key={day.id}
                   onClick={() => setSelectedDay(day.id)}
                   className={cn(
-                    "py-3 rounded-lg transition-all duration-200 text-center text-sm font-medium",
+                    "py-2.5 rounded-lg transition-all duration-200 text-center text-xs font-medium",
                     isSelected
-                      ? "bg-accent text-accent-foreground ring-2 ring-accent ring-offset-2 ring-offset-secondary"
+                      ? "bg-accent text-accent-foreground ring-2 ring-accent ring-offset-1 ring-offset-secondary"
                       : "bg-background text-foreground hover:bg-background/90"
                   )}
                 >
@@ -85,20 +85,20 @@ const DeliveryDay = ({ onBack, onContinue }: DeliveryDayProps) => {
               Delivery instructions (optional)
             </label>
             <Textarea
-              placeholder="e.g., Leave at the front door, ring the doorbell..."
+              placeholder="e.g., Leave at the front door..."
               value={instructions}
               onChange={(e) => setInstructions(e.target.value)}
-              className="min-h-[100px] bg-background border-border resize-none"
+              className="min-h-[80px] bg-background border-border resize-none text-sm"
             />
           </div>
         </div>
       </div>
 
       {/* Footer */}
-      <div className="p-6 bg-secondary">
+      <div className="p-4 bg-secondary shrink-0">
         <Button
           onClick={handleContinue}
-          className="w-full h-14 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold tracking-[0.15em] text-sm uppercase rounded-sm"
+          className="w-full h-12 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold tracking-[0.15em] text-sm uppercase rounded-sm"
         >
           Continue
         </Button>

@@ -37,9 +37,9 @@ const ProteinAvoidance = ({ onBack, onContinue }: ProteinAvoidanceProps) => {
   const isAvoided = (proteinId: string) => avoidedProteins.includes(proteinId);
 
   return (
-    <div className="min-h-screen flex flex-col bg-secondary">
+    <div className="h-dvh flex flex-col bg-secondary overflow-hidden">
       {/* Header */}
-      <header className="bg-background py-4 px-4 flex items-center border-b border-border">
+      <header className="bg-background py-3 px-4 flex items-center border-b border-border shrink-0">
         <button
           onClick={onBack}
           className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-muted transition-colors"
@@ -55,12 +55,12 @@ const ProteinAvoidance = ({ onBack, onContinue }: ProteinAvoidanceProps) => {
       <ProgressBar currentStep={5} totalSteps={11} />
 
       {/* Content */}
-      <div className="flex-1 px-6 py-8 overflow-y-auto">
+      <div className="flex-1 px-4 py-4 min-h-0 flex flex-col justify-center">
         <div className="animate-fade-in">
-          <h2 className="headline-serif text-3xl text-secondary-foreground text-center mb-2">
+          <h2 className="headline-serif text-2xl text-secondary-foreground text-center mb-1">
             Any proteins to avoid?
           </h2>
-          <p className="text-center text-secondary-foreground/70 text-sm mb-8">
+          <p className="text-center text-secondary-foreground/70 text-sm mb-4">
             Tap to exclude from your meals
           </p>
         </div>
@@ -75,7 +75,7 @@ const ProteinAvoidance = ({ onBack, onContinue }: ProteinAvoidanceProps) => {
                 key={protein.id}
                 onClick={() => toggleProtein(protein.id)}
                 className={`
-                  relative p-6 rounded-lg flex flex-col items-center gap-3 transition-all duration-200
+                  relative p-5 rounded-lg flex flex-col items-center gap-2 transition-all duration-200
                   animate-fade-in
                   ${avoided 
                     ? "bg-destructive/10 text-destructive ring-2 ring-destructive ring-offset-2 ring-offset-secondary" 
@@ -90,10 +90,10 @@ const ProteinAvoidance = ({ onBack, onContinue }: ProteinAvoidanceProps) => {
                   </div>
                 )}
                 <div className="relative">
-                  <Icon className={`w-8 h-8 ${avoided ? "text-destructive/70" : "text-accent"}`} />
+                  <Icon className={`w-7 h-7 ${avoided ? "text-destructive/70" : "text-accent"}`} />
                   {avoided && (
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-10 h-0.5 bg-destructive rotate-45 rounded-full" />
+                      <div className="w-9 h-0.5 bg-destructive rotate-45 rounded-full" />
                     </div>
                   )}
                 </div>
@@ -104,19 +104,13 @@ const ProteinAvoidance = ({ onBack, onContinue }: ProteinAvoidanceProps) => {
             );
           })}
         </div>
-
-        {avoidedProteins.length > 0 && (
-          <p className="text-center text-secondary-foreground/60 text-xs mt-6 animate-fade-in">
-            We'll exclude {avoidedProteins.length === 1 ? "this protein" : "these proteins"} from your meals
-          </p>
-        )}
       </div>
 
       {/* Footer */}
-      <div className="p-6 bg-secondary">
+      <div className="p-4 bg-secondary shrink-0">
         <Button
           onClick={() => onContinue(avoidedProteins)}
-          className="w-full h-14 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold tracking-[0.15em] text-sm uppercase rounded-sm"
+          className="w-full h-12 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold tracking-[0.15em] text-sm uppercase rounded-sm"
         >
           {avoidedProteins.length === 0 ? "I Eat All Proteins" : "Continue"}
         </Button>

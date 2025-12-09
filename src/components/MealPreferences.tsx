@@ -35,21 +35,14 @@ const MealPreferences = ({ onBack, onContinue }: MealPreferencesProps) => {
 
   const toggleMeal = (mealId: string) => {
     setSelectedMeals((prev) => {
-      // If clicking "I eat everything"
       if (mealId === "everything") {
         return ["everything"];
       }
-
-      // If clicking a specific meal type
       const withoutEverything = prev.filter((id) => id !== "everything");
-      
       if (prev.includes(mealId)) {
-        // Deselecting this meal
         const newSelection = withoutEverything.filter((id) => id !== mealId);
-        // If nothing left selected, default back to "everything"
         return newSelection.length === 0 ? ["everything"] : newSelection;
       } else {
-        // Selecting this meal - remove "everything" and add new selection
         return [...withoutEverything, mealId];
       }
     });
@@ -58,9 +51,9 @@ const MealPreferences = ({ onBack, onContinue }: MealPreferencesProps) => {
   const isSelected = (mealId: string) => selectedMeals.includes(mealId);
 
   return (
-    <div className="min-h-screen flex flex-col bg-secondary">
+    <div className="h-dvh flex flex-col bg-secondary overflow-hidden">
       {/* Header */}
-      <header className="bg-background py-4 px-4 flex items-center border-b border-border">
+      <header className="bg-background py-3 px-4 flex items-center border-b border-border shrink-0">
         <button
           onClick={onBack}
           className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-muted transition-colors"
@@ -76,17 +69,17 @@ const MealPreferences = ({ onBack, onContinue }: MealPreferencesProps) => {
       <ProgressBar currentStep={3} totalSteps={11} />
 
       {/* Content */}
-      <div className="flex-1 px-6 py-8 overflow-y-auto">
+      <div className="flex-1 px-4 py-4 min-h-0 overflow-y-auto">
         <div className="animate-fade-in">
-          <h2 className="headline-serif text-3xl text-secondary-foreground text-center mb-2">
+          <h2 className="headline-serif text-2xl text-secondary-foreground text-center mb-1">
             What meals do you prefer?
           </h2>
-          <p className="text-center text-secondary-foreground/70 text-sm mb-8">
+          <p className="text-center text-secondary-foreground/70 text-sm mb-4">
             Select all that apply
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
+        <div className="grid grid-cols-2 gap-2 max-w-md mx-auto">
           {mealTypes.map((meal, index) => {
             const Icon = meal.icon;
             const selected = isSelected(meal.id);
@@ -96,7 +89,7 @@ const MealPreferences = ({ onBack, onContinue }: MealPreferencesProps) => {
                 key={meal.id}
                 onClick={() => toggleMeal(meal.id)}
                 className={`
-                  relative p-5 rounded-lg flex flex-col items-center gap-3 transition-all duration-200
+                  relative p-4 rounded-lg flex flex-col items-center gap-2 transition-all duration-200
                   animate-fade-in
                   ${selected 
                     ? "bg-accent text-accent-foreground ring-2 ring-accent ring-offset-2 ring-offset-secondary" 
@@ -110,8 +103,8 @@ const MealPreferences = ({ onBack, onContinue }: MealPreferencesProps) => {
                     <Check className="w-4 h-4" />
                   </div>
                 )}
-                <Icon className={`w-7 h-7 ${selected ? "text-accent-foreground" : "text-accent"}`} />
-                <span className="text-sm font-medium text-center leading-tight">
+                <Icon className={`w-6 h-6 ${selected ? "text-accent-foreground" : "text-accent"}`} />
+                <span className="text-xs font-medium text-center leading-tight">
                   {meal.label}
                 </span>
               </button>
@@ -121,10 +114,10 @@ const MealPreferences = ({ onBack, onContinue }: MealPreferencesProps) => {
       </div>
 
       {/* Footer */}
-      <div className="p-6 bg-secondary">
+      <div className="p-4 bg-secondary shrink-0">
         <Button
           onClick={() => onContinue(selectedMeals)}
-          className="w-full h-14 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold tracking-[0.15em] text-sm uppercase rounded-sm"
+          className="w-full h-12 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold tracking-[0.15em] text-sm uppercase rounded-sm"
         >
           Continue
         </Button>

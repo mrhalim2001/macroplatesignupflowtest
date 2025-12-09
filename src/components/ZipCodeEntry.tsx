@@ -26,16 +26,16 @@ const ZipCodeEntry = ({ onContinue }: ZipCodeEntryProps) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="h-dvh flex flex-col bg-background overflow-hidden">
       {/* Top Banner */}
-      <div className="bg-secondary py-3 px-4">
+      <div className="bg-secondary py-2 px-4 shrink-0">
         <p className="text-center text-xs font-medium tracking-[0.2em] text-secondary-foreground uppercase">
           Customize Your Program. Pause Anytime.
         </p>
       </div>
 
       {/* Header */}
-      <header className="bg-background py-4 px-6 flex items-center justify-between border-b border-border">
+      <header className="bg-background py-3 px-6 flex items-center justify-between border-b border-border shrink-0">
         <div className="w-8" />
         <h1 className="text-xl font-semibold tracking-[0.15em] text-foreground font-sans">
           MACROPLATE
@@ -48,7 +48,7 @@ const ZipCodeEntry = ({ onContinue }: ZipCodeEntryProps) => {
       </header>
 
       {/* Hero Image */}
-      <div className="relative h-64 overflow-hidden">
+      <div className="relative h-40 shrink-0 overflow-hidden">
         <img
           src={heroMeal}
           alt="Delicious healthy meal with grilled chicken and fresh vegetables"
@@ -57,9 +57,9 @@ const ZipCodeEntry = ({ onContinue }: ZipCodeEntryProps) => {
       </div>
 
       {/* Content Section */}
-      <div className="flex-1 bg-secondary px-6 py-10 flex flex-col">
+      <div className="flex-1 bg-secondary px-6 py-6 flex flex-col justify-center min-h-0">
         <div className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <h2 className="headline-serif text-3xl md:text-4xl text-secondary-foreground leading-tight text-center mb-8">
+          <h2 className="headline-serif text-2xl md:text-3xl text-secondary-foreground leading-tight text-center mb-6">
             Award-winning Chefs<br />
             Health Driven Menus<br />
             Delivered Fresh Daily
@@ -75,7 +75,7 @@ const ZipCodeEntry = ({ onContinue }: ZipCodeEntryProps) => {
                 placeholder="Enter your ZIP code"
                 value={zipCode}
                 onChange={handleZipChange}
-                className="h-14 bg-background border-0 text-foreground placeholder:text-muted-foreground text-base px-5 rounded-sm"
+                className="h-12 bg-background border-0 text-foreground placeholder:text-muted-foreground text-base px-5 rounded-sm"
               />
               {error && (
                 <p className="text-destructive text-sm mt-2 text-center">{error}</p>
@@ -83,7 +83,7 @@ const ZipCodeEntry = ({ onContinue }: ZipCodeEntryProps) => {
             </div>
             <Button
               onClick={handleGetStarted}
-              className="h-14 px-8 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold tracking-[0.15em] text-sm uppercase rounded-sm"
+              className="h-12 px-8 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold tracking-[0.15em] text-sm uppercase rounded-sm"
             >
               Get Offer
             </Button>
@@ -92,7 +92,7 @@ const ZipCodeEntry = ({ onContinue }: ZipCodeEntryProps) => {
       </div>
 
       {/* Footer */}
-      <div className="bg-background py-6 px-6 border-t border-border">
+      <div className="bg-background py-4 px-6 border-t border-border shrink-0">
         <p className="text-center text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase">
           Ready to Eat. Stop Anytime.
         </p>
