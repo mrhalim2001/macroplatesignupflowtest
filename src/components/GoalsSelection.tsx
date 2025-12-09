@@ -35,9 +35,9 @@ const GoalsSelection = ({ onBack, onContinue }: GoalsSelectionProps) => {
   const isSelected = (goalId: string) => selectedGoals.includes(goalId);
 
   return (
-    <div className="min-h-screen flex flex-col bg-secondary">
+    <div className="h-dvh flex flex-col bg-secondary overflow-hidden">
       {/* Header */}
-      <header className="bg-background py-4 px-4 flex items-center border-b border-border">
+      <header className="bg-background py-3 px-4 flex items-center border-b border-border shrink-0">
         <button
           onClick={onBack}
           className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-muted transition-colors"
@@ -53,17 +53,17 @@ const GoalsSelection = ({ onBack, onContinue }: GoalsSelectionProps) => {
       <ProgressBar currentStep={2} totalSteps={11} />
 
       {/* Content */}
-      <div className="flex-1 px-6 py-8">
+      <div className="flex-1 px-4 py-4 min-h-0 overflow-y-auto">
         <div className="animate-fade-in">
-          <h2 className="headline-serif text-3xl text-secondary-foreground text-center mb-2">
+          <h2 className="headline-serif text-2xl text-secondary-foreground text-center mb-1">
             What are your goals?
           </h2>
-          <p className="text-center text-secondary-foreground/70 text-sm mb-8">
+          <p className="text-center text-secondary-foreground/70 text-sm mb-4">
             Select up to 3 goals
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
+        <div className="grid grid-cols-2 gap-2 max-w-md mx-auto">
           {goals.map((goal, index) => {
             const Icon = goal.icon;
             const selected = isSelected(goal.id);
@@ -73,7 +73,7 @@ const GoalsSelection = ({ onBack, onContinue }: GoalsSelectionProps) => {
                 key={goal.id}
                 onClick={() => toggleGoal(goal.id)}
                 className={`
-                  relative p-5 rounded-lg flex flex-col items-center gap-3 transition-all duration-200
+                  relative p-4 rounded-lg flex flex-col items-center gap-2 transition-all duration-200
                   animate-fade-in
                   ${selected 
                     ? "bg-accent text-accent-foreground ring-2 ring-accent ring-offset-2 ring-offset-secondary" 
@@ -87,8 +87,8 @@ const GoalsSelection = ({ onBack, onContinue }: GoalsSelectionProps) => {
                     <Check className="w-4 h-4" />
                   </div>
                 )}
-                <Icon className={`w-7 h-7 ${selected ? "text-accent-foreground" : "text-accent"}`} />
-                <span className="text-sm font-medium text-center leading-tight">
+                <Icon className={`w-6 h-6 ${selected ? "text-accent-foreground" : "text-accent"}`} />
+                <span className="text-xs font-medium text-center leading-tight">
                   {goal.label}
                 </span>
               </button>
@@ -98,11 +98,11 @@ const GoalsSelection = ({ onBack, onContinue }: GoalsSelectionProps) => {
       </div>
 
       {/* Footer */}
-      <div className="p-6 bg-secondary">
+      <div className="p-4 bg-secondary shrink-0">
         <Button
           onClick={() => onContinue(selectedGoals)}
           disabled={selectedGoals.length === 0}
-          className="w-full h-14 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold tracking-[0.15em] text-sm uppercase rounded-sm disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full h-12 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold tracking-[0.15em] text-sm uppercase rounded-sm disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Continue
         </Button>

@@ -14,22 +14,19 @@ const frequencyOptions = [
     id: "three-days",
     title: "3 Days",
     description: "Perfect for trying it out",
-    days: ["M", "W", "F"],
-    activeDays: [0, 2, 4], // Mon, Wed, Fri
+    activeDays: [0, 2, 4],
   },
   {
     id: "weekdays",
     title: "Weekdays",
     description: "Monday through Friday",
-    days: ["M", "T", "W", "T", "F"],
-    activeDays: [0, 1, 2, 3, 4], // Mon-Fri
+    activeDays: [0, 1, 2, 3, 4],
   },
   {
     id: "every-day",
     title: "Every Day",
     description: "Full week coverage",
-    days: ["M", "T", "W", "T", "F", "S", "S"],
-    activeDays: [0, 1, 2, 3, 4, 5, 6], // All days
+    activeDays: [0, 1, 2, 3, 4, 5, 6],
   },
 ];
 
@@ -48,9 +45,9 @@ const WeeklyFrequency = ({ onBack, onContinue }: WeeklyFrequencyProps) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-secondary">
+    <div className="h-dvh flex flex-col bg-secondary overflow-hidden">
       {/* Header */}
-      <header className="bg-background py-4 px-4 flex items-center border-b border-border">
+      <header className="bg-background py-3 px-4 flex items-center border-b border-border shrink-0">
         <button
           onClick={onBack}
           className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-muted transition-colors"
@@ -66,17 +63,17 @@ const WeeklyFrequency = ({ onBack, onContinue }: WeeklyFrequencyProps) => {
       <ProgressBar currentStep={7} totalSteps={11} />
 
       {/* Content */}
-      <div className="flex-1 px-6 py-8 overflow-y-auto">
+      <div className="flex-1 px-4 py-4 min-h-0 overflow-y-auto">
         <div className="animate-fade-in">
-          <h2 className="headline-serif text-3xl text-secondary-foreground text-center mb-2">
+          <h2 className="headline-serif text-2xl text-secondary-foreground text-center mb-1">
             How many days per week?
           </h2>
-          <p className="text-center text-secondary-foreground/70 text-sm mb-8">
+          <p className="text-center text-secondary-foreground/70 text-sm mb-4">
             Select your weekly delivery schedule
           </p>
         </div>
 
-        <div className="space-y-4 max-w-md mx-auto">
+        <div className="space-y-3 max-w-md mx-auto">
           {frequencyOptions.map((option) => {
             const isSelected = selected === option.id;
             const activeDays = getActiveDaysForOption(option.id);
@@ -86,41 +83,41 @@ const WeeklyFrequency = ({ onBack, onContinue }: WeeklyFrequencyProps) => {
                 key={option.id}
                 onClick={() => setSelected(option.id)}
                 className={cn(
-                  "w-full p-6 rounded-lg transition-all duration-200 text-left",
+                  "w-full p-4 rounded-lg transition-all duration-200 text-left",
                   isSelected
                     ? "bg-accent text-accent-foreground ring-2 ring-accent ring-offset-2 ring-offset-secondary"
                     : "bg-background text-foreground hover:bg-background/90"
                 )}
               >
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-3">
                   <div>
                     <h3 className={cn(
-                      "text-xl font-semibold",
+                      "text-lg font-semibold",
                       isSelected ? "text-accent-foreground" : "text-foreground"
                     )}>
                       {option.title}
                     </h3>
                     <p className={cn(
-                      "text-sm",
+                      "text-xs",
                       isSelected ? "text-accent-foreground/80" : "text-muted-foreground"
                     )}>
                       {option.description}
                     </p>
                   </div>
                   <div className={cn(
-                    "w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all",
+                    "w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all",
                     isSelected
                       ? "border-accent-foreground bg-accent-foreground"
                       : "border-muted-foreground/30"
                   )}>
                     {isSelected && (
-                      <div className="w-2 h-2 rounded-full bg-accent" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-accent" />
                     )}
                   </div>
                 </div>
 
                 <div className={cn(
-                  "flex items-center justify-center gap-2 py-3 rounded-xl",
+                  "flex items-center justify-center gap-1.5 py-2 rounded-lg",
                   isSelected ? "bg-accent-foreground/10" : "bg-muted/50"
                 )}>
                   {allDays.map((day, index) => {
@@ -129,7 +126,7 @@ const WeeklyFrequency = ({ onBack, onContinue }: WeeklyFrequencyProps) => {
                       <div
                         key={index}
                         className={cn(
-                          "w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold transition-all",
+                          "w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all",
                           isActive
                             ? "bg-accent text-accent-foreground"
                             : "bg-muted text-muted-foreground/40"
@@ -147,10 +144,10 @@ const WeeklyFrequency = ({ onBack, onContinue }: WeeklyFrequencyProps) => {
       </div>
 
       {/* Footer */}
-      <div className="p-6 bg-secondary">
+      <div className="p-4 bg-secondary shrink-0">
         <Button
           onClick={handleContinue}
-          className="w-full h-14 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold tracking-[0.15em] text-sm uppercase rounded-sm"
+          className="w-full h-12 bg-accent hover:bg-accent/90 text-accent-foreground font-semibold tracking-[0.15em] text-sm uppercase rounded-sm"
         >
           Continue
         </Button>
