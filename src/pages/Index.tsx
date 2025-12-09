@@ -2,13 +2,15 @@ import { useState } from "react";
 import ZipCodeEntry from "@/components/ZipCodeEntry";
 import GoalsSelection from "@/components/GoalsSelection";
 import MealPreferences from "@/components/MealPreferences";
+import AllergiesSelection from "@/components/AllergiesSelection";
 
-type Step = "zipcode" | "goals" | "meals";
+type Step = "zipcode" | "goals" | "meals" | "allergies";
 
 interface SignupData {
   zipCode: string;
   goals: string[];
   mealPreferences: string[];
+  allergies: string[];
 }
 
 const Index = () => {
@@ -17,6 +19,7 @@ const Index = () => {
     zipCode: "",
     goals: [],
     mealPreferences: [],
+    allergies: [],
   });
 
   const handleZipCodeSubmit = (zipCode: string) => {
@@ -31,8 +34,13 @@ const Index = () => {
 
   const handleMealsSubmit = (mealPreferences: string[]) => {
     setSignupData((prev) => ({ ...prev, mealPreferences }));
+    setStep("allergies");
+  };
+
+  const handleAllergiesSubmit = (allergies: string[]) => {
+    setSignupData((prev) => ({ ...prev, allergies }));
     // TODO: Navigate to next step
-    console.log("Signup data:", { ...signupData, mealPreferences });
+    console.log("Signup data:", { ...signupData, allergies });
   };
 
   const handleGoBack = () => {
@@ -40,6 +48,8 @@ const Index = () => {
       setStep("zipcode");
     } else if (step === "meals") {
       setStep("goals");
+    } else if (step === "allergies") {
+      setStep("meals");
     }
   };
 
@@ -53,6 +63,9 @@ const Index = () => {
       )}
       {step === "meals" && (
         <MealPreferences onBack={handleGoBack} onContinue={handleMealsSubmit} />
+      )}
+      {step === "allergies" && (
+        <AllergiesSelection onBack={handleGoBack} onContinue={handleAllergiesSubmit} />
       )}
     </>
   );
