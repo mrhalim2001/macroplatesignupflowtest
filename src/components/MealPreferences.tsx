@@ -12,6 +12,7 @@ import {
   Leaf,
   Target
 } from "lucide-react";
+import ProgressBar from "@/components/ProgressBar";
 
 const mealTypes = [
   { id: "everything", label: "I eat everything", icon: Utensils, isDefault: true },
@@ -72,14 +73,7 @@ const MealPreferences = ({ onBack, onContinue }: MealPreferencesProps) => {
       </header>
 
       {/* Progress indicator */}
-      <div className="bg-background px-6 py-3">
-        <div className="flex gap-2">
-          <div className="h-1 flex-1 bg-accent rounded-full" />
-          <div className="h-1 flex-1 bg-accent rounded-full" />
-          <div className="h-1 flex-1 bg-accent rounded-full" />
-          <div className="h-1 flex-1 bg-border rounded-full" />
-        </div>
-      </div>
+      <ProgressBar currentStep={3} />
 
       {/* Content */}
       <div className="flex-1 px-6 py-8 overflow-y-auto">

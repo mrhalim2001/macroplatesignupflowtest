@@ -8,6 +8,7 @@ import {
   Beef,
   Ham
 } from "lucide-react";
+import ProgressBar from "@/components/ProgressBar";
 
 const proteins = [
   { id: "pork", label: "Pork", icon: Ham },
@@ -51,15 +52,7 @@ const ProteinAvoidance = ({ onBack, onContinue }: ProteinAvoidanceProps) => {
       </header>
 
       {/* Progress indicator */}
-      <div className="bg-background px-6 py-3">
-        <div className="flex gap-2">
-          <div className="h-1 flex-1 bg-accent rounded-full" />
-          <div className="h-1 flex-1 bg-accent rounded-full" />
-          <div className="h-1 flex-1 bg-accent rounded-full" />
-          <div className="h-1 flex-1 bg-accent rounded-full" />
-          <div className="h-1 flex-1 bg-accent rounded-full" />
-        </div>
-      </div>
+      <ProgressBar currentStep={5} />
 
       {/* Content */}
       <div className="flex-1 px-6 py-8 overflow-y-auto">
