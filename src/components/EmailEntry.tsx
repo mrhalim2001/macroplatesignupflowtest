@@ -41,11 +41,17 @@ const EmailEntry = ({ onBack, onContinue }: EmailEntryProps) => {
       <ProgressBar currentStep={8} totalSteps={11} />
 
       {/* Content */}
-      <div className="flex-1 px-4 py-6 min-h-0 flex flex-col justify-center">
-        <div className="animate-fade-in">
-          <h2 className="headline-serif text-2xl text-secondary-foreground text-center mb-1">
-            What's your email?
+      <div className="flex-1 px-4 py-6 min-h-0 flex flex-col">
+        <div className="animate-fade-in mb-6">
+          <h2 className="headline-serif text-3xl text-secondary-foreground text-center">
+            Now let's setup your delivery details
           </h2>
+        </div>
+
+        <div className="animate-fade-in">
+          <h3 className="headline-serif text-xl text-secondary-foreground text-center mb-1">
+            What's your email?
+          </h3>
           <p className="text-center text-secondary-foreground/70 text-sm mb-6">
             We'll use this to send order updates
           </p>
