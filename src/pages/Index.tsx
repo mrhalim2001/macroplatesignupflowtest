@@ -10,6 +10,7 @@ import EmailEntry from "@/components/EmailEntry";
 import DeliveryAddress, { DeliveryAddressData } from "@/components/DeliveryAddress";
 import DeliveryDay from "@/components/DeliveryDay";
 import PaymentDetails from "@/components/PaymentDetails";
+import OrderConfirmation from "@/components/OrderConfirmation";
 
 type Step = 
   | "zipcode" 
@@ -22,7 +23,8 @@ type Step =
   | "email"
   | "address"
   | "delivery-day"
-  | "payment";
+  | "payment"
+  | "confirmation";
 
 interface SignupData {
   zipCode: string;
@@ -111,7 +113,7 @@ const Index = () => {
   const handlePaymentSubmit = (paymentMethod: string) => {
     setSignupData((prev) => ({ ...prev, paymentMethod }));
     console.log("Order placed:", { ...signupData, paymentMethod });
-    // TODO: Submit order
+    setStep("confirmation");
   };
 
   const handleGoBack = () => {
@@ -159,6 +161,9 @@ const Index = () => {
       )}
       {step === "payment" && (
         <PaymentDetails onBack={handleGoBack} onContinue={handlePaymentSubmit} />
+      )}
+      {step === "confirmation" && (
+        <OrderConfirmation deliveryDay={signupData.deliveryDay || "sunday"} />
       )}
     </>
   );
