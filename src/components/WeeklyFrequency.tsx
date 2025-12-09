@@ -11,10 +11,10 @@ interface WeeklyFrequencyProps {
 
 const frequencyOptions = [
   {
-    id: "three-days",
-    title: "3 Days",
+    id: "four-days",
+    title: "4 Days",
     description: "Perfect for trying it out",
-    activeDays: [0, 2, 4],
+    activeDays: [0, 1, 2, 3],
   },
   {
     id: "weekdays",
