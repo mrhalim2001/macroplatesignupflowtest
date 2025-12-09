@@ -159,7 +159,13 @@ const PlanSelection = ({ onBack, onContinue, recommendedPlan = "traditional" }: 
                   {plan.title}
                 </h3>
                 <p className={cn(
-                  "text-sm font-bold mt-0.5",
+                  "text-[10px] leading-tight mt-0.5",
+                  isSelected ? "text-accent-foreground/80" : "text-muted-foreground"
+                )}>
+                  {plan.description}
+                </p>
+                <p className={cn(
+                  "text-xs font-bold mt-1",
                   isSelected ? "text-accent-foreground" : "text-foreground"
                 )}>
                   {plan.price}
@@ -188,7 +194,8 @@ const PlanSelection = ({ onBack, onContinue, recommendedPlan = "traditional" }: 
                     </div>
                     <div>
                       <h4 className="text-xs font-medium text-foreground">{addon.title}</h4>
-                      <p className="text-[10px] text-muted-foreground">{addon.price}</p>
+                      <p className="text-[9px] text-muted-foreground">{addon.description}</p>
+                      <p className="text-[10px] font-medium text-muted-foreground">{addon.price}</p>
                     </div>
                   </div>
                   <Switch
