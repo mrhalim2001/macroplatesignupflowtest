@@ -4,8 +4,10 @@ import GoalsSelection from "@/components/GoalsSelection";
 import MealPreferences from "@/components/MealPreferences";
 import AllergiesSelection from "@/components/AllergiesSelection";
 import ProteinAvoidance from "@/components/ProteinAvoidance";
+import DailyMealsSelection from "@/components/DailyMealsSelection";
+import WeeklyFrequency from "@/components/WeeklyFrequency";
 
-type Step = "zipcode" | "goals" | "meals" | "allergies" | "proteins";
+type Step = "zipcode" | "goals" | "meals" | "allergies" | "proteins" | "daily-meals" | "weekly-frequency";
 
 interface SignupData {
   zipCode: string;
@@ -13,6 +15,8 @@ interface SignupData {
   mealPreferences: string[];
   allergies: string[];
   avoidedProteins: string[];
+  dailyMeals: string;
+  weeklyFrequency: string;
 }
 
 const Index = () => {
@@ -23,6 +27,8 @@ const Index = () => {
     mealPreferences: [],
     allergies: [],
     avoidedProteins: [],
+    dailyMeals: "",
+    weeklyFrequency: "",
   });
 
   const handleZipCodeSubmit = (zipCode: string) => {
@@ -47,8 +53,18 @@ const Index = () => {
 
   const handleProteinsSubmit = (avoidedProteins: string[]) => {
     setSignupData((prev) => ({ ...prev, avoidedProteins }));
+    setStep("daily-meals");
+  };
+
+  const handleDailyMealsSubmit = (dailyMeals: string) => {
+    setSignupData((prev) => ({ ...prev, dailyMeals }));
+    setStep("weekly-frequency");
+  };
+
+  const handleWeeklyFrequencySubmit = (weeklyFrequency: string) => {
+    setSignupData((prev) => ({ ...prev, weeklyFrequency }));
     // TODO: Navigate to next step
-    console.log("Signup data:", { ...signupData, avoidedProteins });
+    console.log("Signup data:", { ...signupData, weeklyFrequency });
   };
 
   const handleGoBack = () => {
@@ -60,6 +76,10 @@ const Index = () => {
       setStep("meals");
     } else if (step === "proteins") {
       setStep("allergies");
+    } else if (step === "daily-meals") {
+      setStep("proteins");
+    } else if (step === "weekly-frequency") {
+      setStep("daily-meals");
     }
   };
 
@@ -79,6 +99,12 @@ const Index = () => {
       )}
       {step === "proteins" && (
         <ProteinAvoidance onBack={handleGoBack} onContinue={handleProteinsSubmit} />
+      )}
+      {step === "daily-meals" && (
+        <DailyMealsSelection onBack={handleGoBack} onContinue={handleDailyMealsSubmit} />
+      )}
+      {step === "weekly-frequency" && (
+        <WeeklyFrequency onBack={handleGoBack} onContinue={handleWeeklyFrequencySubmit} />
       )}
     </>
   );

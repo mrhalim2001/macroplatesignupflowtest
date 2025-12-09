@@ -1,0 +1,193 @@
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, Sun, Coffee, Moon } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+interface DailyMealsSelectionProps {
+  onBack: () => void;
+  onContinue: (selection: string) => void;
+}
+
+const mealOptions = [
+  {
+    id: "lunch",
+    title: "Just Lunch",
+    description: "1 meal per day",
+    meals: ["lunch"],
+  },
+  {
+    id: "lunch-dinner",
+    title: "Lunch & Dinner",
+    description: "2 meals per day",
+    meals: ["lunch", "dinner"],
+  },
+  {
+    id: "all-meals",
+    title: "All Three Meals",
+    description: "3 meals per day",
+    meals: ["breakfast", "lunch", "dinner"],
+  },
+];
+
+const MealIcon = ({ type, active }: { type: string; active: boolean }) => {
+  const iconClass = cn(
+    "w-8 h-8 transition-all duration-200",
+    active ? "text-primary" : "text-muted-foreground/30"
+  );
+
+  switch (type) {
+    case "breakfast":
+      return <Coffee className={iconClass} />;
+    case "lunch":
+      return <Sun className={iconClass} />;
+    case "dinner":
+      return <Moon className={iconClass} />;
+    default:
+      return null;
+  }
+};
+
+const DailyMealsSelection = ({ onBack, onContinue }: DailyMealsSelectionProps) => {
+  const [selected, setSelected] = useState<string>("lunch-dinner");
+
+  const handleContinue = () => {
+    onContinue(selected);
+  };
+
+  return (
+    <div className="min-h-screen bg-background flex flex-col">
+      {/* Header */}
+      <div className="p-4">
+        <button
+          onClick={onBack}
+          className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <ArrowLeft className="w-5 h-5" />
+          <span>Back</span>
+        </button>
+      </div>
+
+      {/* Progress bar */}
+      <div className="px-4 mb-8">
+        <div className="h-2 bg-muted rounded-full overflow-hidden">
+          <div
+            className="h-full bg-primary transition-all duration-300"
+            style={{ width: "71%" }}
+          />
+        </div>
+        <p className="text-sm text-muted-foreground mt-2">Step 5 of 7</p>
+      </div>
+
+      {/* Content */}
+      <div className="flex-1 px-4 pb-4">
+        <h1 className="text-3xl font-bold text-foreground mb-2">
+          How many meals per day?
+        </h1>
+        <p className="text-muted-foreground mb-8">
+          Choose how many daily meals you'd like delivered
+        </p>
+
+        <div className="space-y-4">
+          {mealOptions.map((option) => {
+            const isSelected = selected === option.id;
+            return (
+              <button
+                key={option.id}
+                onClick={() => setSelected(option.id)}
+                className={cn(
+                  "w-full p-6 rounded-2xl border-2 transition-all duration-200 text-left",
+                  isSelected
+                    ? "border-primary bg-primary/5"
+                    : "border-border bg-card hover:border-primary/50"
+                )}
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 className={cn(
+                      "text-xl font-semibold",
+                      isSelected ? "text-primary" : "text-foreground"
+                    )}>
+                      {option.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm">
+                      {option.description}
+                    </p>
+                  </div>
+                  <div className={cn(
+                    "w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all",
+                    isSelected
+                      ? "border-primary bg-primary"
+                      : "border-muted-foreground/30"
+                  )}>
+                    {isSelected && (
+                      <div className="w-2 h-2 rounded-full bg-primary-foreground" />
+                    )}
+                  </div>
+                </div>
+
+                {/* Meal icons visualization */}
+                <div className="flex items-center gap-4 justify-center py-3 bg-muted/50 rounded-xl">
+                  <div className="flex flex-col items-center gap-1">
+                    <MealIcon 
+                      type="breakfast" 
+                      active={option.meals.includes("breakfast")} 
+                    />
+                    <span className={cn(
+                      "text-xs font-medium",
+                      option.meals.includes("breakfast") 
+                        ? "text-primary" 
+                        : "text-muted-foreground/30"
+                    )}>
+                      Breakfast
+                    </span>
+                  </div>
+                  <div className="flex flex-col items-center gap-1">
+                    <MealIcon 
+                      type="lunch" 
+                      active={option.meals.includes("lunch")} 
+                    />
+                    <span className={cn(
+                      "text-xs font-medium",
+                      option.meals.includes("lunch") 
+                        ? "text-primary" 
+                        : "text-muted-foreground/30"
+                    )}>
+                      Lunch
+                    </span>
+                  </div>
+                  <div className="flex flex-col items-center gap-1">
+                    <MealIcon 
+                      type="dinner" 
+                      active={option.meals.includes("dinner")} 
+                    />
+                    <span className={cn(
+                      "text-xs font-medium",
+                      option.meals.includes("dinner") 
+                        ? "text-primary" 
+                        : "text-muted-foreground/30"
+                    )}>
+                      Dinner
+                    </span>
+                  </div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Bottom button */}
+      <div className="p-4 border-t border-border">
+        <Button
+          onClick={handleContinue}
+          className="w-full py-6 text-lg font-semibold"
+          size="lg"
+        >
+          Continue
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default DailyMealsSelection;
