@@ -3,14 +3,16 @@ import ZipCodeEntry from "@/components/ZipCodeEntry";
 import GoalsSelection from "@/components/GoalsSelection";
 import MealPreferences from "@/components/MealPreferences";
 import AllergiesSelection from "@/components/AllergiesSelection";
+import ProteinAvoidance from "@/components/ProteinAvoidance";
 
-type Step = "zipcode" | "goals" | "meals" | "allergies";
+type Step = "zipcode" | "goals" | "meals" | "allergies" | "proteins";
 
 interface SignupData {
   zipCode: string;
   goals: string[];
   mealPreferences: string[];
   allergies: string[];
+  avoidedProteins: string[];
 }
 
 const Index = () => {
@@ -20,6 +22,7 @@ const Index = () => {
     goals: [],
     mealPreferences: [],
     allergies: [],
+    avoidedProteins: [],
   });
 
   const handleZipCodeSubmit = (zipCode: string) => {
@@ -39,8 +42,13 @@ const Index = () => {
 
   const handleAllergiesSubmit = (allergies: string[]) => {
     setSignupData((prev) => ({ ...prev, allergies }));
+    setStep("proteins");
+  };
+
+  const handleProteinsSubmit = (avoidedProteins: string[]) => {
+    setSignupData((prev) => ({ ...prev, avoidedProteins }));
     // TODO: Navigate to next step
-    console.log("Signup data:", { ...signupData, allergies });
+    console.log("Signup data:", { ...signupData, avoidedProteins });
   };
 
   const handleGoBack = () => {
@@ -50,6 +58,8 @@ const Index = () => {
       setStep("goals");
     } else if (step === "allergies") {
       setStep("meals");
+    } else if (step === "proteins") {
+      setStep("allergies");
     }
   };
 
@@ -66,6 +76,9 @@ const Index = () => {
       )}
       {step === "allergies" && (
         <AllergiesSelection onBack={handleGoBack} onContinue={handleAllergiesSubmit} />
+      )}
+      {step === "proteins" && (
+        <ProteinAvoidance onBack={handleGoBack} onContinue={handleProteinsSubmit} />
       )}
     </>
   );
