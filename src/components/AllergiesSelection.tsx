@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { 
   ArrowLeft, 
-  Check, 
+  X,
   Shell,
   Nut,
   Bean,
@@ -69,7 +69,7 @@ const AllergiesSelection = ({ onBack, onContinue }: AllergiesSelectionProps) => 
             Any food allergies?
           </h2>
           <p className="text-center text-secondary-foreground/70 text-sm mb-8">
-            Select all that apply, or skip if none
+            Tap to exclude from your meals
           </p>
         </div>
 
@@ -86,7 +86,7 @@ const AllergiesSelection = ({ onBack, onContinue }: AllergiesSelectionProps) => 
                   relative p-5 rounded-lg flex flex-col items-center gap-3 transition-all duration-200
                   animate-fade-in
                   ${selected 
-                    ? "bg-accent text-accent-foreground ring-2 ring-accent ring-offset-2 ring-offset-secondary" 
+                    ? "bg-destructive/10 text-destructive ring-2 ring-destructive ring-offset-2 ring-offset-secondary" 
                     : "bg-background text-foreground hover:bg-background/90"
                   }
                 `}
@@ -94,17 +94,30 @@ const AllergiesSelection = ({ onBack, onContinue }: AllergiesSelectionProps) => 
               >
                 {selected && (
                   <div className="absolute top-2 right-2">
-                    <Check className="w-4 h-4" />
+                    <X className="w-4 h-4 text-destructive" />
                   </div>
                 )}
-                <Icon className={`w-7 h-7 ${selected ? "text-accent-foreground" : "text-accent"}`} />
-                <span className="text-sm font-medium text-center leading-tight">
-                  {allergy.label}
+                <div className="relative">
+                  <Icon className={`w-7 h-7 ${selected ? "text-destructive/70" : "text-accent"}`} />
+                  {selected && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-9 h-0.5 bg-destructive rotate-45 rounded-full" />
+                    </div>
+                  )}
+                </div>
+                <span className={`text-sm font-medium text-center leading-tight ${selected ? "line-through opacity-70" : ""}`}>
+                  {selected ? `No ${allergy.label}` : allergy.label}
                 </span>
               </button>
             );
           })}
         </div>
+
+        {selectedAllergies.length > 0 && (
+          <p className="text-center text-secondary-foreground/60 text-xs mt-6 animate-fade-in">
+            We'll exclude {selectedAllergies.length === 1 ? "this allergen" : "these allergens"} from your meals
+          </p>
+        )}
       </div>
 
       {/* Footer */}
