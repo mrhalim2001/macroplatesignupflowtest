@@ -10,7 +10,7 @@ import {
   Milk,
   Egg,
   Fish,
-  Cherry
+  Sprout
 } from "lucide-react";
 import ProgressBar from "@/components/ProgressBar";
 
@@ -22,7 +22,7 @@ const allergies = [
   { id: "dairy", label: "Dairy", icon: Milk },
   { id: "eggs", label: "Eggs", icon: Egg },
   { id: "fish", label: "Fish", icon: Fish },
-  { id: "soy", label: "Soy", icon: Cherry },
+  { id: "soy", label: "Soy", icon: Sprout },
 ];
 
 interface AllergiesSelectionProps {
