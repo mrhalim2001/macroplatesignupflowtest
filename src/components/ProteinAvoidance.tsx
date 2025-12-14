@@ -97,7 +97,7 @@ const ProteinAvoidance = ({ onBack, onContinue }: ProteinAvoidanceProps) => {
                     </div>
                   )}
                 </div>
-                <span className={`text-xs font-medium text-center leading-tight ${avoided ? "line-through opacity-70" : ""}`}>
+                <span className={`text-xs font-medium text-center leading-tight ${avoided ? "opacity-70" : ""}`}>
                   {avoided ? `No ${protein.label}` : protein.label}
                 </span>
               </button>
