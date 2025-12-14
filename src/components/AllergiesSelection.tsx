@@ -105,7 +105,7 @@ const AllergiesSelection = ({ onBack, onContinue }: AllergiesSelectionProps) => 
                     </div>
                   )}
                 </div>
-                <span className={`text-xs font-medium text-center leading-tight ${selected ? "line-through opacity-70" : ""}`}>
+                <span className={`text-xs font-medium text-center leading-tight ${selected ? "opacity-70" : ""}`}>
                   {selected ? `No ${allergy.label}` : allergy.label}
                 </span>
               </button>
