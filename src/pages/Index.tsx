@@ -10,6 +10,7 @@ import PlanSelection from "@/components/PlanSelection";
 import EmailEntry from "@/components/EmailEntry";
 import DeliveryAddress, { DeliveryAddressData } from "@/components/DeliveryAddress";
 import DeliveryDay from "@/components/DeliveryDay";
+import OrderReview from "@/components/OrderReview";
 import PaymentDetails from "@/components/PaymentDetails";
 import OrderConfirmation from "@/components/OrderConfirmation";
 
@@ -25,6 +26,7 @@ type Step =
   | "email"
   | "address"
   | "delivery-day"
+  | "review"
   | "payment"
   | "confirmation";
 
@@ -141,6 +143,10 @@ const Index = () => {
 
   const handleDeliveryDaySubmit = (deliveryDay: string, deliveryInstructions: string) => {
     setSignupData((prev) => ({ ...prev, deliveryDay, deliveryInstructions }));
+    setStep("review");
+  };
+
+  const handleReviewContinue = () => {
     setStep("payment");
   };
 
@@ -153,7 +159,7 @@ const Index = () => {
   const handleGoBack = () => {
     const stepOrder: Step[] = [
       "zipcode", "goals", "meals", "allergies", "proteins", 
-      "daily-meals", "weekly-frequency", "plan-selection", "email", "address", "delivery-day", "payment"
+      "daily-meals", "weekly-frequency", "plan-selection", "email", "address", "delivery-day", "review", "payment"
     ];
     const currentIndex = stepOrder.indexOf(step);
     if (currentIndex > 0) {
@@ -195,6 +201,19 @@ const Index = () => {
       )}
       {step === "delivery-day" && (
         <DeliveryDay onBack={handleGoBack} onContinue={handleDeliveryDaySubmit} />
+      )}
+      {step === "review" && (
+        <OrderReview 
+          onBack={handleGoBack} 
+          onContinue={handleReviewContinue}
+          orderData={{
+            selectedPlan: signupData.selectedPlan,
+            addons: signupData.addons,
+            deliveryDay: signupData.deliveryDay,
+            address: signupData.address,
+            weeklyFrequency: signupData.weeklyFrequency,
+          }}
+        />
       )}
       {step === "payment" && (
         <PaymentDetails onBack={handleGoBack} onContinue={handlePaymentSubmit} />
