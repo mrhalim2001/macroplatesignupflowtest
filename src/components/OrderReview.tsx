@@ -66,7 +66,7 @@ const OrderReview = ({ onBack, onContinue, orderData }: OrderReviewProps) => {
         >
           <ArrowLeft className="w-5 h-5" />
         </button>
-        <span className="font-serif text-lg font-semibold text-secondary-foreground">tovala</span>
+        <span className="font-serif text-lg font-semibold text-secondary-foreground">MACROPLATE</span>
         <div className="w-9" />
       </div>
 
