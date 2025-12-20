@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { format, nextMonday, addWeeks } from "date-fns";
 import ProgressBar from "@/components/ProgressBar";
 
 interface DeliveryDayProps {
@@ -10,22 +11,22 @@ interface DeliveryDayProps {
   onContinue: (day: string, instructions: string) => void;
 }
 
-const days = [
-  { id: "sunday", label: "Sun" },
-  { id: "monday", label: "Mon" },
-  { id: "tuesday", label: "Tue" },
-  { id: "wednesday", label: "Wed" },
-  { id: "thursday", label: "Thu" },
-  { id: "friday", label: "Fri" },
-  { id: "saturday", label: "Sat" },
-];
-
 const DeliveryDay = ({ onBack, onContinue }: DeliveryDayProps) => {
-  const [selectedDay, setSelectedDay] = useState<string>("sunday");
+  const upcomingMondays = useMemo(() => {
+    const today = new Date();
+    const firstMonday = nextMonday(today);
+    return [
+      firstMonday,
+      addWeeks(firstMonday, 1),
+      addWeeks(firstMonday, 2),
+    ];
+  }, []);
+
+  const [selectedDate, setSelectedDate] = useState<Date>(upcomingMondays[0]);
   const [instructions, setInstructions] = useState("");
 
   const handleContinue = () => {
-    onContinue(selectedDay, instructions);
+    onContinue(format(selectedDate, "yyyy-MM-dd"), instructions);
   };
 
   return (
@@ -50,37 +51,40 @@ const DeliveryDay = ({ onBack, onContinue }: DeliveryDayProps) => {
       <div className="flex-1 px-4 py-4 min-h-0 overflow-y-auto">
         <div className="animate-fade-in">
           <h2 className="headline-serif text-2xl text-secondary-foreground text-center mb-1">
-            Best day for delivery?
+            When should we start?
           </h2>
-          <p className="text-center text-secondary-foreground/70 text-sm mb-4">
-            Choose which day works best for you
+          <p className="text-center text-secondary-foreground/70 text-sm mb-6">
+            Choose your first delivery date
           </p>
         </div>
 
         <div className="space-y-4 max-w-md mx-auto">
-          {/* Day selector */}
-          <div className="grid grid-cols-7 gap-1">
-            {days.map((day) => {
-              const isSelected = selectedDay === day.id;
+          {/* Monday date selector */}
+          <div className="space-y-2">
+            {upcomingMondays.map((monday, index) => {
+              const isSelected = selectedDate.getTime() === monday.getTime();
               return (
                 <button
-                  key={day.id}
-                  onClick={() => setSelectedDay(day.id)}
+                  key={index}
+                  onClick={() => setSelectedDate(monday)}
                   className={cn(
-                    "py-2.5 rounded-lg transition-all duration-200 text-center text-xs font-medium",
+                    "w-full py-4 px-4 rounded-lg transition-all duration-200 flex items-center gap-3",
                     isSelected
-                      ? "bg-accent text-accent-foreground ring-2 ring-accent ring-offset-1 ring-offset-secondary"
+                      ? "bg-accent text-accent-foreground ring-2 ring-accent ring-offset-2 ring-offset-secondary"
                       : "bg-background text-foreground hover:bg-background/90"
                   )}
                 >
-                  {day.label}
+                  <Calendar className="w-5 h-5 shrink-0" />
+                  <span className="font-medium">
+                    {format(monday, "EEEE, MMMM d")}
+                  </span>
                 </button>
               );
             })}
           </div>
 
           {/* Delivery instructions */}
-          <div className="space-y-2">
+          <div className="space-y-2 pt-2">
             <label className="text-sm font-medium text-secondary-foreground">
               Delivery instructions (optional)
             </label>
