@@ -57,18 +57,19 @@ const OrderReview = ({ onBack, onContinue, orderData }: OrderReviewProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-secondary flex flex-col">
+    <div className="h-dvh flex flex-col bg-secondary overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 bg-secondary">
-        <button 
+      <header className="bg-background py-3 px-4 flex items-center border-b border-border shrink-0">
+        <button
           onClick={onBack}
-          className="p-2 -ml-2 text-secondary-foreground hover:text-secondary-foreground/80 transition-colors"
+          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-muted transition-colors"
         >
-          <ArrowLeft className="w-5 h-5" />
+          <ArrowLeft className="w-5 h-5 text-foreground" />
         </button>
-        <span className="font-serif text-lg font-semibold text-secondary-foreground">MACROPLATE</span>
-        <div className="w-9" />
-      </div>
+        <h1 className="flex-1 text-center text-lg font-semibold tracking-[0.1em] text-foreground font-sans pr-10">
+          MACROPLATE
+        </h1>
+      </header>
 
       {/* Progress Bar */}
       <div className="px-4 pb-2">
